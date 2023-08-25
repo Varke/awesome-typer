@@ -1,2 +1,3 @@
-# typer
-typer
+### Typer test
+
+`npm start`
