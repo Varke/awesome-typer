@@ -3,15 +3,25 @@ import styled, { keyframes } from 'styled-components';
 import { ReactComponent as LanguageIcon } from '../icons/language_18dp.svg';
 import { ReactComponent as NumbersIcon } from '../icons/numbers_18dp.svg';
 import { ReactComponent as PunctuationIcon } from '../icons/punctuation_18dp.svg';
+import { ReactComponent as RefreshIcon } from '../icons/refresh_18dp.svg';
 
+import { Button } from './Button';
 import { Dropdown } from './Dropdown';
 import { Tag } from './Tag';
+import { Timer } from './Timer';
 import { Toggle } from './Toggle';
 
 const TyperScreen = () => {
    const originalString =
       'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing by an independent and impartial tribunal, in the determination of his rights and obligations and of any criminal charge against him.';
    const [inputString, setInputString] = useState('');
+   const [timerEnabled, setTimerEnabled] = useState(false);
+
+   const resetAll = () => {
+      setInputString('');
+      setTimerEnabled(false);
+   };
+
    const getColorForChar = (char, index) => {
       if (index >= inputString.length) {
          return '#939eae'; // Серый цвет для неактивных символов
@@ -34,6 +44,10 @@ const TyperScreen = () => {
             // Обрабатываем только символы длиной 1, чтобы не трогать служебные
             else if (event.key.length === 1) {
                setInputString(inputString + event.key);
+               if (!timerEnabled) {
+                  console.log('make timer enable');
+                  setTimerEnabled(true);
+               }
             }
          }
       };
@@ -57,6 +71,7 @@ const TyperScreen = () => {
          </Options>
          <Tags>
             <Tag>{inputString.length + '/' + originalString.length}</Tag>
+            <Timer enable={timerEnabled} />
          </Tags>
          <TextContainer>
             {/* <Text ref={componentRef}>{str}</Text> */}
@@ -71,6 +86,9 @@ const TyperScreen = () => {
                ))}
             </TextWithLetters>
          </TextContainer>
+         <Button onClick={() => resetAll()} icon={<RefreshIcon />}>
+            Restart
+         </Button>
       </Container>
    );
 };
