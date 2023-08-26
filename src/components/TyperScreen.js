@@ -4,6 +4,7 @@ import { ReactComponent as LanguageIcon } from '../icons/language_18dp.svg';
 import { ReactComponent as NumbersIcon } from '../icons/numbers_18dp.svg';
 import { ReactComponent as PunctuationIcon } from '../icons/punctuation_18dp.svg';
 
+import { Dropdown } from './Dropdown';
 import { Tag } from './Tag';
 import { Toggle } from './Toggle';
 
@@ -33,7 +34,6 @@ const TyperScreen = () => {
             // Обрабатываем только символы длиной 1, чтобы не трогать служебные
             else if (event.key.length === 1) {
                setInputString(inputString + event.key);
-               console.log(inputString);
             }
          }
       };
@@ -48,7 +48,10 @@ const TyperScreen = () => {
    return (
       <Container>
          <Options>
-            <Toggle icon={<LanguageIcon />}>English</Toggle>
+            <Dropdown
+               options={['English', 'Russian', 'Chinese']}
+               icon={<LanguageIcon />}
+            ></Dropdown>
             <Toggle icon={<PunctuationIcon />}>Punctuation</Toggle>
             <Toggle icon={<NumbersIcon />}>Numbers</Toggle>
          </Options>
