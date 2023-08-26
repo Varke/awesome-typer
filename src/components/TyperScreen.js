@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { ReactComponent as LanguageIcon } from '../icons/language_18dp.svg';
+import { ReactComponent as NumbersIcon } from '../icons/numbers_18dp.svg';
+import { ReactComponent as PunctuationIcon } from '../icons/punctuation_18dp.svg';
+
 import { Tag } from './Tag';
+import { Toggle } from './Toggle';
 
 const TyperScreen = () => {
    const originalString =
@@ -42,6 +47,11 @@ const TyperScreen = () => {
 
    return (
       <Container>
+         <Options>
+            <Toggle icon={<LanguageIcon />}>English</Toggle>
+            <Toggle icon={<PunctuationIcon />}>Punctuation</Toggle>
+            <Toggle icon={<NumbersIcon />}>Numbers</Toggle>
+         </Options>
          <Tags>
             <Tag>{inputString.length + '/' + originalString.length}</Tag>
          </Tags>
@@ -61,6 +71,13 @@ const TyperScreen = () => {
       </Container>
    );
 };
+
+const Options = styled.div`
+   display: flex;
+   justify-content: center;
+   width: 80%;
+   gap: 10px;
+`;
 
 const Tags = styled.div`
    display: flex;
