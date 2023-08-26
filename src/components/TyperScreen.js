@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { Tag } from './Tag';
 
 const TyperScreen = () => {
    const originalString =
-      'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing by an independent and impartial tribunal, in the determination of his rights and obligations and of any criminal charge against him. No one shall be subjected to arbitrary interference with his privacy, family';
+      'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing by an independent and impartial tribunal, in the determination of his rights and obligations and of any criminal charge against him.';
    const [inputString, setInputString] = useState('');
-
    const getColorForChar = (char, index) => {
       if (index >= inputString.length) {
          return '#939eae'; // Серый цвет для неактивных символов
@@ -42,6 +42,9 @@ const TyperScreen = () => {
 
    return (
       <Container>
+         <Tags>
+            <Tag>{inputString.length + '/' + originalString.length}</Tag>
+         </Tags>
          <TextContainer>
             {/* <Text ref={componentRef}>{str}</Text> */}
             <TextWithLetters>
@@ -58,6 +61,12 @@ const TyperScreen = () => {
       </Container>
    );
 };
+
+const Tags = styled.div`
+   display: flex;
+   width: 80%;
+   gap: 10px;
+`;
 
 const blinkingAnimation = keyframes`
   from {
@@ -106,6 +115,7 @@ const Container = styled.div`
    flex-direction: column;
    justify-content: center;
    align-items: center;
+   gap: 20px;
 `;
 
 const Text = styled.span`
