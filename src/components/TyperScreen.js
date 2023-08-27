@@ -7,6 +7,7 @@ import { ReactComponent as NumbersIcon } from '../icons/numbers_18dp.svg';
 import { ReactComponent as PunctuationIcon } from '../icons/punctuation_18dp.svg';
 import { ReactComponent as RefreshIcon } from '../icons/refresh_18dp.svg';
 
+import { GetText } from '../requests/Text';
 import { Button } from './Button';
 import { Dropdown } from './Dropdown';
 import { Tag } from './Tag';
@@ -15,10 +16,31 @@ import { Toggle } from './Toggle';
 
 const TyperScreen = () => {
    const theme = useTheme();
-   const originalString =
-      'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing by an independent and impartial tribunal, in the determination of his rights and obligations and of any criminal charge against him.';
+   // const originalString =
+   //    'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing by an independent and impartial tribunal, in the determination of his rights and obligations and of any criminal charge against him.';
    const [inputString, setInputString] = useState('');
    const [timerEnabled, setTimerEnabled] = useState(false);
+   const [originalString, setOriginalString] = useState('');
+   let requestSended = false;
+
+   /// temporary
+   const setData = async () => {
+      try {
+         const fetchedData = await GetText();
+         setOriginalString(fetchedData);
+         return fetchedData;
+      } catch (error) {
+         // Обработка ошибок
+      }
+   };
+
+   /// temporary
+   useEffect(() => {
+      if (!requestSended) {
+         requestSended = true;
+         setData();
+      }
+   }, [requestSended]);
 
    const resetAll = () => {
       setInputString('');
@@ -84,14 +106,15 @@ const TyperScreen = () => {
          <TextContainer>
             {/* <Text ref={componentRef}>{str}</Text> */}
             <TextWithLetters>
-               {originalString.split('').map((char, index) => (
-                  <Letter
-                     color={getColorForChar(char, index)}
-                     needShowBeforeBlock={index === inputString.length}
-                  >
-                     {char}
-                  </Letter>
-               ))}
+               {originalString.length > 0 &&
+                  originalString.split('').map((char, index) => (
+                     <Letter
+                        color={getColorForChar(char, index)}
+                        needShowBeforeBlock={index === inputString.length}
+                     >
+                        {char}
+                     </Letter>
+                  ))}
             </TextWithLetters>
          </TextContainer>
          <Button onClick={() => resetAll()} icon={<RefreshIcon />}>
