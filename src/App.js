@@ -1,11 +1,12 @@
 import './App.css';
+import Theme from './components/Theme';
 import TyperScreen from './components/TyperScreen';
 
 function App() {
    return (
-      <div className="App">
+      <Theme>
          <TyperScreen />
-      </div>
+      </Theme>
    );
 }
 

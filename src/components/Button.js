@@ -15,9 +15,10 @@ const Container = styled.button`
    border-radius: 10px;
    background: #2c323b;
    font-size: 16px;
+   line-height: 16px;
    font-family: 'Noto Sans Mono', monospace;
    font-weight: 400;
-   color: white;
+   color: ${(props) => props.theme.textColor};
    display: flex;
    gap: 10px;
    align-items: center;
@@ -26,6 +27,6 @@ const Container = styled.button`
    cursor: pointer;
    user-select: none;
    svg {
-      fill: white;
+      fill: ${(props) => props.theme.textColor};
    }
 `;

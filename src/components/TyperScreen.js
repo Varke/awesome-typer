@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, useTheme } from 'styled-components';
+import { ReactComponent as ErrorIcon } from '../icons/error_24dp.svg';
 import { ReactComponent as LanguageIcon } from '../icons/language_18dp.svg';
 import { ReactComponent as NumbersIcon } from '../icons/numbers_18dp.svg';
 import { ReactComponent as PunctuationIcon } from '../icons/punctuation_18dp.svg';
@@ -12,6 +13,7 @@ import { Timer } from './Timer';
 import { Toggle } from './Toggle';
 
 const TyperScreen = () => {
+   const theme = useTheme();
    const originalString =
       'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing by an independent and impartial tribunal, in the determination of his rights and obligations and of any criminal charge against him.';
    const [inputString, setInputString] = useState('');
@@ -72,6 +74,9 @@ const TyperScreen = () => {
          <Tags>
             <Tag>{inputString.length + '/' + originalString.length}</Tag>
             <Timer enable={timerEnabled} />
+            <Tag icon={<ErrorIcon />} customColor={theme.errorTextColor}>
+               {0}
+            </Tag>
          </Tags>
          <TextContainer>
             {/* <Text ref={componentRef}>{str}</Text> */}
@@ -96,14 +101,14 @@ const TyperScreen = () => {
 const Options = styled.div`
    display: flex;
    justify-content: center;
-   width: 80%;
+   width: 75%;
    gap: 10px;
 `;
 
 const Tags = styled.div`
    display: flex;
-   width: 80%;
-   gap: 10px;
+   width: 75%;
+   gap: 30px;
 `;
 
 const blinkingAnimation = keyframes`
@@ -142,7 +147,7 @@ const TextContainer = styled.div`
    display: flex;
    flex-direction: column;
    justify-content: flex-start;
-   width: 80%;
+   width: 75%;
 `;
 
 const Container = styled.div`

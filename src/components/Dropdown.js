@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { ReactComponent as ExpandMoreIcon } from '../icons/expand_more_18dp.svg';
 
 const DropdownContainer = styled.div`
    position: relative;
@@ -78,6 +79,7 @@ export const Dropdown = ({ options, icon }) => {
          <DropdownButton onClick={toggleDropdown} isOpen={isOpen}>
             {icon}
             {selectedOption || options[0]}
+            <ExpandMoreIcon />
          </DropdownButton>
          <DropdownList isOpen={isOpen}>
             {options.map((option) => (

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const Tag = (props) => {
    return (
-      <Container>
+      <Container customColor={props.customColor}>
          {props.icon}
          {props.children}
       </Container>
@@ -11,15 +11,19 @@ export const Tag = (props) => {
 };
 
 const Container = styled.div`
-   padding-inline: 20px;
-   border-radius: 10px;
-   background: #2c323b;
-   font-size: 16px;
+   /* padding-inline: 20px; */
+   /* border-radius: 10px; */
+   /* background: #2c323b; */
+   font-size: 24px;
+   line-height: 24px;
    font-family: 'Noto Sans Mono', monospace;
    font-weight: 400;
-   color: white;
+   color: ${(props) => props.customColor || props.theme.correctTextColor};
    display: flex;
    gap: 10px;
    align-items: center;
-   height: 40px;
+   /* height: 40px; */
+   svg {
+      fill: ${(props) => props.customColor || props.theme.correctTextColor};
+   }
 `;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as TimerIcon } from '../icons/timer_18dp.svg';
+import { ReactComponent as TimerIcon } from '../icons/timer_24dp.svg';
 
 export const Timer = (props) => {
    const [seconds, setSeconds] = useState(0);
@@ -29,15 +29,16 @@ export const Timer = (props) => {
 };
 
 const Container = styled.div`
-   padding-inline: 20px;
-   border-radius: 10px;
-   background: #2c323b;
-   font-size: 16px;
+   /* padding-inline: 20px; */
+   /* border-radius: 10px; */
+   /* background: #2c323b; */
+   font-size: 24px;
+   line-height: 24px;
    font-family: 'Noto Sans Mono', monospace;
    font-weight: 400;
    color: white;
    display: flex;
-   gap: 5px;
+   gap: 10px;
    align-items: center;
    height: 40px;
    svg {
