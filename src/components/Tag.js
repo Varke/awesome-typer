@@ -13,10 +13,10 @@ export const Tag = (props) => {
 const Container = styled.div`
    /* padding-inline: 20px; */
    /* border-radius: 10px; */
-   /* background: #2c323b; */
+   /* background: ${(props) => props.theme.containerBackgroundColor}; */
    font-size: 24px;
    line-height: 24px;
-   font-family: 'Noto Sans Mono', monospace;
+   font-family: ${(props) => props.theme.fontFamily};
    font-weight: 400;
    color: ${(props) => props.customColor || props.theme.correctTextColor};
    display: flex;

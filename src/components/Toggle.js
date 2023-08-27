@@ -14,9 +14,9 @@ export const Toggle = (props) => {
 const Container = styled.button`
    padding-inline: 20px;
    border-radius: 10px;
-   background: #2c323b;
+   background: ${(props) => props.theme.containerBackgroundColor};
    font-size: 16px;
-   font-family: 'Noto Sans Mono', monospace;
+   font-family: ${(props) => props.theme.fontFamily};
    font-weight: 400;
    color: ${(props) => (props.active ? 'white' : '#939eae')};
    border: none;

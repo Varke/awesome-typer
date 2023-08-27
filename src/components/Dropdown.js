@@ -10,9 +10,9 @@ const DropdownContainer = styled.div`
 const DropdownButton = styled.button`
    padding-inline: 20px;
    border-radius: ${(props) => (props.isOpen ? '10px 10px 0px 0px' : '10px')};
-   background: #2c323b;
+   background: ${(props) => props.theme.containerBackgroundColor};
    font-size: 16px;
-   font-family: 'Noto Sans Mono', monospace;
+   font-family: ${(props) => props.theme.fontFamily};
    font-weight: 400;
    color: ${(props) => (props.active ? 'white' : '#939eae')};
    border: none;
@@ -28,7 +28,7 @@ const DropdownButton = styled.button`
 
 const DropdownList = styled.ul`
    z-index: 5;
-   font-family: 'Noto Sans Mono', monospace;
+   font-family: ${(props) => props.theme.fontFamily};
    color: #939eae;
    position: absolute;
    top: 100%;
@@ -57,7 +57,7 @@ const DropdownItem = styled.li`
    transition: background-color 0.2s ease;
 
    &:hover {
-      color: white;
+      color: ${(props) => props.theme.correctTextColor};
    }
 `;
 

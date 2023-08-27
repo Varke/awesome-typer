@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes, useTheme } from 'styled-components';
+import { ReactComponent as CompleteIcon } from '../icons/complete_24dp.svg';
 import { ReactComponent as ErrorIcon } from '../icons/error_24dp.svg';
 import { ReactComponent as LanguageIcon } from '../icons/language_18dp.svg';
 import { ReactComponent as NumbersIcon } from '../icons/numbers_18dp.svg';
@@ -72,7 +73,9 @@ const TyperScreen = () => {
             <Toggle icon={<NumbersIcon />}>Numbers</Toggle>
          </Options>
          <Tags>
-            <Tag>{inputString.length + '/' + originalString.length}</Tag>
+            <Tag icon={<CompleteIcon />}>
+               {inputString.length + '/' + originalString.length}
+            </Tag>
             <Timer enable={timerEnabled} />
             <Tag icon={<ErrorIcon />} customColor={theme.errorTextColor}>
                {0}
@@ -123,7 +126,7 @@ const blinkingAnimation = keyframes`
 const Letter = styled.span`
    position: relative;
    font-size: 24px;
-   font-family: 'Noto Sans Mono', monospace;
+   font-family: ${(props) => props.theme.fontFamily};
    font-weight: 400;
    user-select: none;
    color: ${(props) => props.color};
@@ -164,14 +167,14 @@ const Container = styled.div`
 const Text = styled.span`
    color: ${(props) => (props.active ? '#FFF' : '#939eae')};
    font-size: 24px;
-   font-family: 'Noto Sans Mono', monospace;
+   font-family: ${(props) => props.theme.fontFamily};
    font-weight: 400;
    user-select: none;
    margin-top: 0;
 `;
 
 const TextWithLetters = styled(Text)`
-   color: white;
+   color: ${(props) => props.theme.correctTextColor};
 `;
 
 export default TyperScreen;
