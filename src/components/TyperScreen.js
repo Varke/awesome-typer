@@ -21,6 +21,8 @@ const TyperScreen = () => {
    const [inputString, setInputString] = useState('');
    const [timerEnabled, setTimerEnabled] = useState(false);
    const [originalString, setOriginalString] = useState('');
+   const [errorCount, setErrorCount] = useState(0);
+
    let requestSended = false;
 
    /// temporary
@@ -33,7 +35,6 @@ const TyperScreen = () => {
          // Обработка ошибок
       }
    };
-
    /// temporary
    useEffect(() => {
       if (!requestSended) {
@@ -45,6 +46,7 @@ const TyperScreen = () => {
    const resetAll = () => {
       setInputString('');
       setTimerEnabled(false);
+      setErrorCount(0);
    };
 
    const getColorForChar = (char, index) => {
@@ -68,10 +70,18 @@ const TyperScreen = () => {
             }
             // Обрабатываем только символы длиной 1, чтобы не трогать служебные
             else if (event.key.length === 1) {
-               setInputString(inputString + event.key);
+               const newString = inputString + event.key;
+               setInputString(newString);
                if (!timerEnabled) {
-                  console.log('make timer enable');
                   setTimerEnabled(true);
+               }
+               if (
+                  newString.length > 0 &&
+                  originalString.length > 0 &&
+                  newString[newString.length - 1] !==
+                     originalString[newString.length - 1]
+               ) {
+                  setErrorCount(errorCount + 1);
                }
             }
          }
@@ -82,7 +92,7 @@ const TyperScreen = () => {
       return () => {
          window.removeEventListener('keydown', handleKeyDown);
       };
-   }, [inputString]);
+   }, [originalString, inputString]);
 
    return (
       <Container>
@@ -100,7 +110,7 @@ const TyperScreen = () => {
             </Tag>
             <Timer enable={timerEnabled} />
             <Tag icon={<ErrorIcon />} customColor={theme.errorTextColor}>
-               {0}
+               {errorCount}
             </Tag>
          </Tags>
          <TextContainer>
