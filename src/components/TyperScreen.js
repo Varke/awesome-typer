@@ -18,6 +18,7 @@ import { Toggle } from './Toggle';
 import { SocialButton } from './SocialButton';
 import Modal from './Modal';
 import { SupportModal } from './SupportModal';
+import { Logo } from './Logo';
 
 const TyperScreen = () => {
    const theme = useTheme();
@@ -109,7 +110,7 @@ const TyperScreen = () => {
          <Modal isOpen={modal} onClose={() => setModal(false)}>
             <SupportModal></SupportModal>
          </Modal>
-         <div>Logo and other</div>
+         <Logo></Logo>
          <VerticalFlex>
             <Options>
                <Dropdown

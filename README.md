@@ -1,12 +1,12 @@
-# Typer! by Varke
+# awesome-typer
 
-Measure, enhance, impress! **Typer by Varke** is your key to boosting productivity and efficiency. Gauge your skills, practice using intuitive tools, and amaze others with your adeptness and accuracy
+Measure, enhance, impress! **awesome-typer** is your key to boosting productivity and efficiency. Gauge your skills, practice using intuitive tools, and amaze others with your adeptness and accuracy
 
 ## TODO
 
 1. [x] Errors counter
 2. [x] Social links
-3. [ ] Logo
+3. [x] Logo
 4. [ ] Result page
 5. [ ] Header
 6. [ ] Auth
