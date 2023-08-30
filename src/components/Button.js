@@ -11,6 +11,7 @@ export const Button = (props) => {
 };
 
 const Container = styled.button`
+   transition: 0.3s ease-in;
    padding-inline: 20px;
    border-radius: 10px;
    background: ${(props) => props.theme.containerBackgroundColor};
@@ -22,11 +23,21 @@ const Container = styled.button`
    display: flex;
    gap: 10px;
    align-items: center;
+   justify-content: center;
    height: 40px;
    border: none;
    cursor: pointer;
    user-select: none;
+   flex-grow: 1;
    svg {
+      transition: 0.3s ease-in;
       fill: ${(props) => props.theme.textColor};
+   }
+   &:hover {
+      background: ${(props) => props.theme.textColor};
+      color: ${(props) => props.theme.containerBackgroundColor};
+      svg {
+         fill: ${(props) => props.theme.containerBackgroundColor};
+      }
    }
 `;

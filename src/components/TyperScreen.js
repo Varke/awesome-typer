@@ -6,6 +6,8 @@ import { ReactComponent as LanguageIcon } from '../icons/language_18dp.svg';
 import { ReactComponent as NumbersIcon } from '../icons/numbers_18dp.svg';
 import { ReactComponent as PunctuationIcon } from '../icons/punctuation_18dp.svg';
 import { ReactComponent as RefreshIcon } from '../icons/refresh_18dp.svg';
+import { ReactComponent as MoneyIcon } from '../icons/money_18dp.svg';
+import { ReactComponent as CodeIcon } from '../icons/code_18dp.svg';
 
 import { GetText } from '../requests/Text';
 import { Button } from './Button';
@@ -13,6 +15,9 @@ import { Dropdown } from './Dropdown';
 import { Tag } from './Tag';
 import { Timer } from './Timer';
 import { Toggle } from './Toggle';
+import { SocialButton } from './SocialButton';
+import Modal from './Modal';
+import { SupportModal } from './SupportModal';
 
 const TyperScreen = () => {
    const theme = useTheme();
@@ -22,8 +27,13 @@ const TyperScreen = () => {
    const [timerEnabled, setTimerEnabled] = useState(false);
    const [originalString, setOriginalString] = useState('');
    const [errorCount, setErrorCount] = useState(0);
+   const [modal, setModal] = useState(false);
 
    let requestSended = false;
+
+   const showSupportModal = () => {
+      setModal(true);
+   };
 
    /// temporary
    const setData = async () => {
@@ -96,43 +106,75 @@ const TyperScreen = () => {
 
    return (
       <Container>
-         <Options>
-            <Dropdown
-               options={['English', 'Russian', 'Chinese']}
-               icon={<LanguageIcon />}
-            ></Dropdown>
-            <Toggle icon={<PunctuationIcon />}>Punctuation</Toggle>
-            <Toggle icon={<NumbersIcon />}>Numbers</Toggle>
-         </Options>
+         <Modal isOpen={modal} onClose={() => setModal(false)}>
+            <SupportModal></SupportModal>
+         </Modal>
+         <div>Logo and other</div>
+         <VerticalFlex>
+            <Options>
+               <Dropdown
+                  options={['English', 'Russian', 'Chinese']}
+                  icon={<LanguageIcon />}
+               ></Dropdown>
+               <Toggle icon={<PunctuationIcon />}>Punctuation</Toggle>
+               <Toggle icon={<NumbersIcon />}>Numbers</Toggle>
+            </Options>
+            <Tags>
+               <Tag icon={<CompleteIcon />}>
+                  {inputString.length + '/' + originalString.length}
+               </Tag>
+               <Timer enable={timerEnabled} />
+               <Tag icon={<ErrorIcon />} customColor={theme.errorTextColor}>
+                  {errorCount}
+               </Tag>
+            </Tags>
+            <TextContainer>
+               {/* <Text ref={componentRef}>{str}</Text> */}
+               <TextWithLetters>
+                  {originalString.length > 0 &&
+                     originalString.split('').map((char, index) => (
+                        <Letter
+                           color={getColorForChar(char, index)}
+                           needShowBeforeBlock={index === inputString.length}
+                        >
+                           {char}
+                        </Letter>
+                     ))}
+               </TextWithLetters>
+            </TextContainer>
+            <Button onClick={() => resetAll()} icon={<RefreshIcon />}>
+               Restart
+            </Button>
+         </VerticalFlex>
          <Tags>
-            <Tag icon={<CompleteIcon />}>
-               {inputString.length + '/' + originalString.length}
-            </Tag>
-            <Timer enable={timerEnabled} />
-            <Tag icon={<ErrorIcon />} customColor={theme.errorTextColor}>
-               {errorCount}
-            </Tag>
+            <SocialButton
+               icon={<MoneyIcon />}
+               onClick={() => showSupportModal()}
+            >
+               Support
+            </SocialButton>
+            <SocialButton
+               icon={<CodeIcon />}
+               onClick={() =>
+                  window.open('https://github.com/Varke/typer', 'blank')
+               }
+            >
+               Github
+            </SocialButton>
          </Tags>
-         <TextContainer>
-            {/* <Text ref={componentRef}>{str}</Text> */}
-            <TextWithLetters>
-               {originalString.length > 0 &&
-                  originalString.split('').map((char, index) => (
-                     <Letter
-                        color={getColorForChar(char, index)}
-                        needShowBeforeBlock={index === inputString.length}
-                     >
-                        {char}
-                     </Letter>
-                  ))}
-            </TextWithLetters>
-         </TextContainer>
-         <Button onClick={() => resetAll()} icon={<RefreshIcon />}>
-            Restart
-         </Button>
       </Container>
    );
 };
+
+const VerticalFlex = styled.div`
+   width: 100%;
+   background: #333a45;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: center;
+   gap: 20px;
+`;
 
 const Options = styled.div`
    display: flex;
@@ -188,13 +230,14 @@ const TextContainer = styled.div`
 
 const Container = styled.div`
    width: 100%;
-   height: 100vh;
+   min-height: 100vh;
    background: #333a45;
    display: flex;
    flex-direction: column;
-   justify-content: center;
+   justify-content: space-between;
    align-items: center;
-   gap: 20px;
+   gap: 60px;
+   padding: 50px 0px;
 `;
 
 const Text = styled.span`

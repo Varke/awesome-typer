@@ -5,7 +5,7 @@ Measure, enhance, impress! **Typer by Varke** is your key to boosting productivi
 ## TODO
 
 1. [x] Errors counter
-2. [ ] Social links
+2. [x] Social links
 3. [ ] Logo
 4. [ ] Result page
 5. [ ] Header
