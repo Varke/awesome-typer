@@ -8,6 +8,8 @@ import { ReactComponent as PunctuationIcon } from '../icons/punctuation_18dp.svg
 import { ReactComponent as RefreshIcon } from '../icons/refresh_18dp.svg';
 import { ReactComponent as MoneyIcon } from '../icons/money_18dp.svg';
 import { ReactComponent as CodeIcon } from '../icons/code_18dp.svg';
+import { ReactComponent as StarsIcon } from '../icons/stars_18dp.svg';
+import { ReactComponent as SentencesIcon } from '../icons/sentences_18dp.svg';
 
 import { GetText } from '../requests/Text';
 import { Button } from './Button';
@@ -22,8 +24,6 @@ import { Logo } from './Logo';
 
 const TyperScreen = () => {
    const theme = useTheme();
-   // const originalString =
-   //    'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing by an independent and impartial tribunal, in the determination of his rights and obligations and of any criminal charge against him.';
    const [inputString, setInputString] = useState('');
    const [timerEnabled, setTimerEnabled] = useState(false);
    const [originalString, setOriginalString] = useState('');
@@ -119,13 +119,18 @@ const TyperScreen = () => {
                ></Dropdown>
                <Toggle icon={<PunctuationIcon />}>Punctuation</Toggle>
                <Toggle icon={<NumbersIcon />}>Numbers</Toggle>
+               <Toggle icon={<SentencesIcon />}>Sentences</Toggle>
+               <Dropdown
+                  options={['Small', 'Medium', 'Large', 'Quotes']}
+                  icon={<StarsIcon />}
+               ></Dropdown>
             </Options>
             <Tags>
                <Tag icon={<CompleteIcon />}>
                   {inputString.length + '/' + originalString.length}
                </Tag>
                <Timer enable={timerEnabled} />
-               <Tag icon={<ErrorIcon />} customColor={theme.errorTextColor}>
+               <Tag icon={<ErrorIcon />} custom_color={theme.errorTextColor}>
                   {errorCount}
                </Tag>
             </Tags>
@@ -135,8 +140,9 @@ const TyperScreen = () => {
                   {originalString.length > 0 &&
                      originalString.split('').map((char, index) => (
                         <Letter
+                           key={index}
                            color={getColorForChar(char, index)}
-                           needShowBeforeBlock={index === inputString.length}
+                           $needShowBeforeBlock={index === inputString.length}
                         >
                            {char}
                         </Letter>
@@ -209,7 +215,7 @@ const Letter = styled.span`
    &::before {
       content: '';
       display: ${(props) =>
-         props.needShowBeforeBlock
+         props.$needShowBeforeBlock
             ? 'block'
             : 'none'}; // Блоковое отображение для ::before
       position: absolute;

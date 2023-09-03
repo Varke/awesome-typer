@@ -41,7 +41,7 @@ export const Logo = () => {
             originalString
                .split('')
                .map((char, index) => (
-                  <Letter color={getColorForChar(char, index)}>{char}</Letter>
+                  <Letter key={index} color={getColorForChar(char, index)}>{char}</Letter>
                ))}
          <h6>made by varke</h6>
       </Container>
@@ -66,5 +66,6 @@ const Container = styled.a`
    text-decoration: none;
    h6 {
       text-align: center;
+      font-weight: 500;
    }
 `;

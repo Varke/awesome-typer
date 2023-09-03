@@ -8,17 +8,17 @@ const DropdownContainer = styled.div`
 `;
 
 const DropdownButton = styled.button`
-   padding-inline: 20px;
+   padding-inline: 15px;
    border-radius: ${(props) => (props.isOpen ? '10px 10px 0px 0px' : '10px')};
    background: ${(props) => props.theme.containerBackgroundColor};
-   font-size: 16px;
+   font-size: 14px;
    font-family: ${(props) => props.theme.fontFamily};
    font-weight: 400;
    color: ${(props) => (props.active ? 'white' : '#939eae')};
    border: none;
    cursor: pointer;
    display: flex;
-   gap: 10px;
+   gap: 5px;
    align-items: center;
    height: 40px;
    svg {
@@ -51,7 +51,8 @@ const DropdownList = styled.ul`
 `;
 
 const DropdownItem = styled.li`
-   padding: 10px 20px;
+   padding: 10px 15px;
+   font-size: 14px;
    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
    cursor: pointer;
    transition: background-color 0.2s ease;
