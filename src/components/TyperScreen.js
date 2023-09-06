@@ -64,6 +64,7 @@ const TyperScreen = () => {
       setErrorCount(0);
       setTimestamps([]);
       setTotalSymbols(0);
+      setShowStatistics(false);
    };
 
    const getColorForChar = (char, index) => {
@@ -138,8 +139,9 @@ const TyperScreen = () => {
             <SupportModal></SupportModal>
          </Modal>
          <Logo></Logo>
-         {!showStatistics && (
-            <VerticalFlex>
+
+            <VerticalFlex>{!showStatistics && (
+               <>
                <Options>
                   <Dropdown
                      options={['English', 'Russian', 'Chinese']}
@@ -179,23 +181,23 @@ const TyperScreen = () => {
                         ))}
                   </TextWithLetters>
                </TextContainer>
+
+               </>)}
+               {showStatistics && (
+                  <Statistics
+                     data={timestamps}
+                     spm={(originalString.length / timestamps.length) * 60}
+                     total_symbols={originalString.length}
+                     accuracy={1 - errorCount / totalSymbols}
+                     total_errors={errorCount}
+                  />
+               )}
                <Button onClick={() => resetAll()} icon={<RefreshIcon />}>
                   Restart
                </Button>
-               <Button onClick={() => setShowStatistics(true)}>
-                  Show stat
-               </Button>
             </VerticalFlex>
-         )}
-         {showStatistics && (
-            <Statistics
-               data={timestamps}
-               spm={(originalString.length / timestamps.length) * 60}
-               total_symbols={originalString.length}
-               accuracy={1 - errorCount / totalSymbols}
-               total_errors={errorCount}
-            />
-         )}
+
+
          <Tags>
             <SocialButton
                icon={<MoneyIcon />}
