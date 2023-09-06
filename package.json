@@ -10,6 +10,7 @@
       "react-beautiful-dnd": "^13.1.1",
       "react-dom": "^18.2.0",
       "react-scripts": "5.0.1",
+      "recharts": "^2.8.0",
       "styled-components": "^6.0.5",
       "web-vitals": "^3.4.0"
    },

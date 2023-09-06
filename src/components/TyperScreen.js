@@ -21,6 +21,7 @@ import { SocialButton } from './SocialButton';
 import Modal from './Modal';
 import { SupportModal } from './SupportModal';
 import { Logo } from './Logo';
+import { Statistics } from './Statistics';
 
 const TyperScreen = () => {
    const theme = useTheme();
@@ -29,6 +30,8 @@ const TyperScreen = () => {
    const [originalString, setOriginalString] = useState('');
    const [errorCount, setErrorCount] = useState(0);
    const [modal, setModal] = useState(false);
+   const [showStatistics, setShowStatistics] = useState(false);
+   const [timestamps, setTimestamps] = useState([]);
 
    let requestSended = false;
 
@@ -58,6 +61,7 @@ const TyperScreen = () => {
       setInputString('');
       setTimerEnabled(false);
       setErrorCount(0);
+      setTimestamps([]);
    };
 
    const getColorForChar = (char, index) => {
@@ -68,6 +72,22 @@ const TyperScreen = () => {
          return 'white'; // Белый цвет для совпавших символов
       }
       return '#ca4754'; // Красный цвет для несовпавших символов
+   };
+
+   const updateTimestamps = () => {
+      const date = new Date(Date.now());
+      // [key, total count]
+      const key =
+         date.getMinutes().toString() + '_' + date.getSeconds().toString();
+      const existingData = timestamps.find(([index]) => index === key);
+      if (existingData) {
+         // Если запись уже существует, увеличиваем счетчик символов
+         existingData[1] += 1;
+      } else {
+         // Если записи нет, создаем новую
+         timestamps.push([key, 1]);
+      }
+      setTimestamps([...timestamps]);
    };
 
    // Обработчик нажатия клавиши
@@ -81,6 +101,7 @@ const TyperScreen = () => {
             }
             // Обрабатываем только символы длиной 1, чтобы не трогать служебные
             else if (event.key.length === 1) {
+               updateTimestamps();
                const newString = inputString + event.key;
                setInputString(newString);
                if (!timerEnabled) {
@@ -94,6 +115,8 @@ const TyperScreen = () => {
                ) {
                   setErrorCount(errorCount + 1);
                }
+               if (newString.length === originalString.length)
+                  setShowStatistics(true);
             }
          }
       };
@@ -111,48 +134,56 @@ const TyperScreen = () => {
             <SupportModal></SupportModal>
          </Modal>
          <Logo></Logo>
-         <VerticalFlex>
-            <Options>
-               <Dropdown
-                  options={['English', 'Russian', 'Chinese']}
-                  icon={<LanguageIcon />}
-               ></Dropdown>
-               <Toggle icon={<PunctuationIcon />}>Punctuation</Toggle>
-               <Toggle icon={<NumbersIcon />}>Numbers</Toggle>
-               <Toggle icon={<SentencesIcon />}>Sentences</Toggle>
-               <Dropdown
-                  options={['Small', 'Medium', 'Large', 'Quotes']}
-                  icon={<StarsIcon />}
-               ></Dropdown>
-            </Options>
-            <Tags>
-               <Tag icon={<CompleteIcon />}>
-                  {inputString.length + '/' + originalString.length}
-               </Tag>
-               <Timer enable={timerEnabled} />
-               <Tag icon={<ErrorIcon />} custom_color={theme.errorTextColor}>
-                  {errorCount}
-               </Tag>
-            </Tags>
-            <TextContainer>
-               {/* <Text ref={componentRef}>{str}</Text> */}
-               <TextWithLetters>
-                  {originalString.length > 0 &&
-                     originalString.split('').map((char, index) => (
-                        <Letter
-                           key={index}
-                           color={getColorForChar(char, index)}
-                           $needShowBeforeBlock={index === inputString.length}
-                        >
-                           {char}
-                        </Letter>
-                     ))}
-               </TextWithLetters>
-            </TextContainer>
-            <Button onClick={() => resetAll()} icon={<RefreshIcon />}>
-               Restart
-            </Button>
-         </VerticalFlex>
+         {!showStatistics && (
+            <VerticalFlex>
+               <Options>
+                  <Dropdown
+                     options={['English', 'Russian', 'Chinese']}
+                     icon={<LanguageIcon />}
+                  ></Dropdown>
+                  <Toggle icon={<PunctuationIcon />}>Punctuation</Toggle>
+                  <Toggle icon={<NumbersIcon />}>Numbers</Toggle>
+                  <Toggle icon={<SentencesIcon />}>Sentences</Toggle>
+                  <Dropdown
+                     options={['Small', 'Medium', 'Large', 'Quotes']}
+                     icon={<StarsIcon />}
+                  ></Dropdown>
+               </Options>
+               <Tags>
+                  <Tag icon={<CompleteIcon />}>
+                     {inputString.length + '/' + originalString.length}
+                  </Tag>
+                  <Timer enable={timerEnabled} />
+                  <Tag icon={<ErrorIcon />} custom_color={theme.errorTextColor}>
+                     {errorCount}
+                  </Tag>
+               </Tags>
+               <TextContainer>
+                  {/* <Text ref={componentRef}>{str}</Text> */}
+                  <TextWithLetters>
+                     {originalString.length > 0 &&
+                        originalString.split('').map((char, index) => (
+                           <Letter
+                              key={index}
+                              color={getColorForChar(char, index)}
+                              $needShowBeforeBlock={
+                                 index === inputString.length
+                              }
+                           >
+                              {char}
+                           </Letter>
+                        ))}
+                  </TextWithLetters>
+               </TextContainer>
+               <Button onClick={() => resetAll()} icon={<RefreshIcon />}>
+                  Restart
+               </Button>
+               <Button onClick={() => setShowStatistics(true)}>
+                  Show stat
+               </Button>
+            </VerticalFlex>
+         )}
+         {showStatistics && <Statistics data={timestamps} />}
          <Tags>
             <SocialButton
                icon={<MoneyIcon />}

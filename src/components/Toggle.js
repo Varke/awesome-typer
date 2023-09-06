@@ -4,10 +4,7 @@ import styled from 'styled-components';
 export const Toggle = (props) => {
    const [active, setActive] = useState(false);
    return (
-      <Container
-         $active={active}
-         onClick={() => setActive(!active)}
-      >
+      <Container $active={active} onClick={() => setActive(!active)}>
          {props.icon}
          {props.children}
       </Container>

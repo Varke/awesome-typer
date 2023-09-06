@@ -38,11 +38,11 @@ export const Logo = () => {
    return (
       <Container href={'http://localhost:3000/'}>
          {originalString.length > 0 &&
-            originalString
-               .split('')
-               .map((char, index) => (
-                  <Letter key={index} color={getColorForChar(char, index)}>{char}</Letter>
-               ))}
+            originalString.split('').map((char, index) => (
+               <Letter key={index} color={getColorForChar(char, index)}>
+                  {char}
+               </Letter>
+            ))}
          <h6>made by varke</h6>
       </Container>
    );
