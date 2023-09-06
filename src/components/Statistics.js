@@ -20,24 +20,12 @@ export const Statistics = (props) => {
    };
    const data = props.data;
    const theme = useTheme();
-   const {
-      gradient = 'CLOUD',
-      title = 'Total views',
-      value = 39520,
-      old_value = 38000,
-   } = props;
    return (
       <ContainerStyled>
          <ResponsiveContainer>
             <AreaChart data={constructDataForGraph(data)}>
                <defs>
-                  <linearGradient
-                     id={`${gradient}`}
-                     x1="0"
-                     y1="0"
-                     x2="0"
-                     y2="1"
-                  >
+                  <linearGradient id={`gradient`} x1="0" y1="0" x2="0" y2="1">
                      <stop
                         offset="5%"
                         stopColor={`${theme.correctTextColor}`}
@@ -57,7 +45,7 @@ export const Statistics = (props) => {
                <Area
                   stroke={`${theme.correctTextColor}`}
                   fillOpacity={1}
-                  fill={`url(#${gradient})`}
+                  fill={`url(#gradient)`}
                   type="monotone"
                   dataKey="value"
                   strokeWidth={3}
@@ -88,30 +76,30 @@ export const Statistics = (props) => {
          </ResponsiveContainer>
          <ContainerWithNumbericalResults>
             <CellWithData>
-               <Number>130</Number>
+               <Number>{Math.round(props.spm)}</Number>
                <Description>
                   Symbols <br></br>per minute
                </Description>
             </CellWithData>
             <CellWithData>
-               <Number>100%</Number>
+               <Number>{Math.round(props.accuracy * 100)}%</Number>
                <Description>Accuracy</Description>
             </CellWithData>
             <CellWithData></CellWithData>
             <CellWithData>
-               <Number>310</Number>
+               <Number>{props.total_symbols}</Number>
                <Description>
-                  Total <br></br>symbols
+                  Text <br></br>length
                </Description>
             </CellWithData>
             <CellWithData>
-               <Number>30</Number>
+               <Number>{props.total_errors}</Number>
                <Description>
                   Total <br></br>errors
                </Description>
             </CellWithData>
             <CellWithData>
-               <Number>12s</Number>
+               <Number>{props.data.length}s</Number>
                <Description>
                   Total <br></br>time
                </Description>
@@ -123,7 +111,7 @@ export const Statistics = (props) => {
 
 const ContainerStyled = styled.div`
    width: 75%;
-   height: 35vh;
+   height: 40vh;
    display: flex;
    flex-direction: column;
    gap: 20px;

@@ -32,6 +32,7 @@ const TyperScreen = () => {
    const [modal, setModal] = useState(false);
    const [showStatistics, setShowStatistics] = useState(false);
    const [timestamps, setTimestamps] = useState([]);
+   const [totalSymbols, setTotalSymbols] = useState(0);
 
    let requestSended = false;
 
@@ -62,6 +63,7 @@ const TyperScreen = () => {
       setTimerEnabled(false);
       setErrorCount(0);
       setTimestamps([]);
+      setTotalSymbols(0);
    };
 
    const getColorForChar = (char, index) => {
@@ -101,6 +103,7 @@ const TyperScreen = () => {
             }
             // Обрабатываем только символы длиной 1, чтобы не трогать служебные
             else if (event.key.length === 1) {
+               setTotalSymbols(totalSymbols + 1);
                updateTimestamps();
                const newString = inputString + event.key;
                setInputString(newString);
@@ -115,8 +118,9 @@ const TyperScreen = () => {
                ) {
                   setErrorCount(errorCount + 1);
                }
-               if (newString.length === originalString.length)
+               if (newString.length === originalString.length) {
                   setShowStatistics(true);
+               }
             }
          }
       };
@@ -183,7 +187,15 @@ const TyperScreen = () => {
                </Button>
             </VerticalFlex>
          )}
-         {showStatistics && <Statistics data={timestamps} />}
+         {showStatistics && (
+            <Statistics
+               data={timestamps}
+               spm={(originalString.length / timestamps.length) * 60}
+               total_symbols={originalString.length}
+               accuracy={1 - errorCount / totalSymbols}
+               total_errors={errorCount}
+            />
+         )}
          <Tags>
             <SocialButton
                icon={<MoneyIcon />}
