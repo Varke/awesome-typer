@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 export const Logo = () => {
    const originalString = 'awesome-typer';
    const [inputString, setInputString] = useState('');
+   const theme = useTheme();
 
    const getColorForChar = (char, index) => {
       if (index >= inputString.length) {
-         return '#939eae'; // Серый цвет для неактивных символов
+         return theme.textColor; // Серый цвет для неактивных символов
       }
       if (inputString[index] === char) {
-         return 'white'; // Белый цвет для совпавших символов
+         return theme.correctTextColor; // Белый цвет для совпавших символов
       }
-      return '#ca4754'; // Красный цвет для несовпавших символов
+      return theme.errorTextColor; // Красный цвет для несовпавших символов
    };
 
    useEffect(() => {

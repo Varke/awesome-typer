@@ -67,14 +67,15 @@ const TyperScreen = () => {
       setShowStatistics(false);
    };
 
-   const getColorForChar = (char, index) => {
+   const getColorForChar = (char, index) =>
+   {
       if (index >= inputString.length) {
-         return '#939eae'; // Серый цвет для неактивных символов
+         return theme.textColor; // Серый цвет для неактивных символов
       }
       if (inputString[index] === char) {
-         return 'white'; // Белый цвет для совпавших символов
+         return theme.correctTextColor; // Белый цвет для совпавших символов
       }
-      return '#ca4754'; // Красный цвет для несовпавших символов
+      return theme.errorTextColor; // Красный цвет для несовпавших символов
    };
 
    const updateTimestamps = () => {
@@ -268,7 +269,7 @@ const Letter = styled.span`
       top: 0;
       height: 100%;
       width: 2px;
-      background-color: green;
+      background-color: ${props => props.theme.pointerColor};
       animation: ${blinkingAnimation} 0.6s infinite alternate;
    }
 `;

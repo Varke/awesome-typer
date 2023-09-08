@@ -14,7 +14,7 @@ const DropdownButton = styled.button`
    font-size: 14px;
    font-family: ${(props) => props.theme.fontFamily};
    font-weight: 400;
-   color: ${(props) => (props.active ? 'white' : '#939eae')};
+   color: ${(props) => (props.active ? `${props.theme.correctTextColor}` : '#939eae')};
    border: none;
    cursor: pointer;
    display: flex;
@@ -22,7 +22,7 @@ const DropdownButton = styled.button`
    align-items: center;
    height: 40px;
    svg {
-      fill: ${(props) => (props.active ? 'white' : '#939eae')};
+      fill: ${(props) => (props.active ? `${props.theme.correctTextColor}` : '#939eae')};
    }
 `;
 

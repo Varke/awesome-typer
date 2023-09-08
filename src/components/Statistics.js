@@ -66,7 +66,7 @@ export const Statistics = (props) => {
                   tickLine={false}
                   axisLine={false}
                   tick={{
-                     fill: `${theme.correctTextColor}`,
+                     fill: `${theme.textColor}`,
                      fontSize: '14px',
                      fontFamily: `${theme.fontFamily}`,
                   }}

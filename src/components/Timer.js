@@ -42,6 +42,6 @@ const Container = styled.div`
    align-items: center;
    height: 40px;
    svg {
-      fill: white;
+      fill: ${(props) => props.theme.correctTextColor};
    }
 `;
