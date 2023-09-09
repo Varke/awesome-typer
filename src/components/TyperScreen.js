@@ -11,7 +11,6 @@ import { ReactComponent as CodeIcon } from '../icons/code_18dp.svg';
 import { ReactComponent as StarsIcon } from '../icons/stars_18dp.svg';
 import { ReactComponent as SentencesIcon } from '../icons/sentences_18dp.svg';
 
-import { GetText } from '../requests/Text';
 import { Button } from './Button';
 import { Dropdown } from './Dropdown';
 import { Tag } from './Tag';
@@ -22,7 +21,7 @@ import Modal from './Modal';
 import { SupportModal } from './SupportModal';
 import { Logo } from './Logo';
 import { Statistics } from './Statistics';
-import { ENG_TEXT, FILTER } from './Const';
+import {  FILTER } from './Const';
 import {
    getColorForChar,
    getNumericTextSize,
@@ -72,7 +71,7 @@ const TyperScreen = () => {
       }
       // Убрать знаки препинания, если флаг выключен
       if (!newFilter[FILTER.keys.punctuation])
-         newString = newString.replace(/[,\/#!$%^&*;:{}=\-_`~()]/g, '');
+         newString = newString.replace(/[,#!$%^&*;:{}=\-_`~()]/g, '');
 
       // Убрать знаки числа, если флаг выключен
       if (!newFilter[FILTER.keys.numbers])
