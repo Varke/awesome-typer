@@ -158,7 +158,7 @@ const TyperScreen = (props) => {
       return () => {
          window.removeEventListener('keydown', handleKeyDown);
       };
-   }, [originalString, inputString]);
+   }, [originalString, inputString, totalSymbols]);
 
    return (
       <Container>
