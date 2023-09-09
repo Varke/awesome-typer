@@ -2,9 +2,16 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 export const Toggle = (props) => {
-   const [active, setActive] = useState(false);
+   const [active, setActive] = useState(true);
+
+   const changeHandler = () => {
+      const newValue = !active;
+      setActive(newValue);
+      props.changeCallback(props.filterKey, newValue);
+   };
+
    return (
-      <Container $active={active} onClick={() => setActive(!active)}>
+      <Container $active={active} onClick={() => changeHandler()}>
          {props.icon}
          {props.children}
       </Container>

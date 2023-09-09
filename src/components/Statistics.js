@@ -51,15 +51,17 @@ export const Statistics = (props) => {
                   strokeWidth={3}
                />
                <XAxis
-                  dataKey="name"
                   tickLine={false}
                   tick={{
-                     fill: `${theme.correctTextColor}`,
+                     fill: `${theme.textColor}`,
                      fontSize: '14px',
                      fontFamily: `${theme.fontFamily}`,
                   }}
                   interval={'preserveStartEnd'}
                   axisLine={false}
+                  tickFormatter={(tick, index) =>
+                     index === 0 ? ' ' : index + 's'
+                  }
                />
                <YAxis
                   width={40}

@@ -22,6 +22,7 @@ import Modal from './Modal';
 import { SupportModal } from './SupportModal';
 import { Logo } from './Logo';
 import { Statistics } from './Statistics';
+import { FILTER_KEYS } from './Const';
 
 const TyperScreen = () => {
    const theme = useTheme();
@@ -33,8 +34,21 @@ const TyperScreen = () => {
    const [showStatistics, setShowStatistics] = useState(false);
    const [timestamps, setTimestamps] = useState([]);
    const [totalSymbols, setTotalSymbols] = useState(0);
+   const [stringFilter, setStringFilter] = useState({
+      [FILTER_KEYS.language]: 'English',
+      [FILTER_KEYS.punctuation]: true,
+      [FILTER_KEYS.numbers]: true,
+      [FILTER_KEYS.sentences]: true,
+      [FILTER_KEYS.size]: 'Small',
+   });
 
    let requestSended = false;
+
+   const changeInnerStateCallback = (key, option) => {
+      setStringFilter({ ...stringFilter, [key]: option });
+      console.log(stringFilter);
+      // setData();
+   };
 
    const showSupportModal = () => {
       setModal(true);
@@ -67,8 +81,7 @@ const TyperScreen = () => {
       setShowStatistics(false);
    };
 
-   const getColorForChar = (char, index) =>
-   {
+   const getColorForChar = (char, index) => {
       if (index >= inputString.length) {
          return theme.textColor; // Серый цвет для неактивных символов
       }
@@ -141,63 +154,88 @@ const TyperScreen = () => {
          </Modal>
          <Logo></Logo>
 
-            <VerticalFlex>{!showStatistics && (
+         <VerticalFlex>
+            {!showStatistics && (
                <>
-               <Options>
-                  <Dropdown
-                     options={['English', 'Russian', 'Chinese']}
-                     icon={<LanguageIcon />}
-                  ></Dropdown>
-                  <Toggle icon={<PunctuationIcon />}>Punctuation</Toggle>
-                  <Toggle icon={<NumbersIcon />}>Numbers</Toggle>
-                  <Toggle icon={<SentencesIcon />}>Sentences</Toggle>
-                  <Dropdown
-                     options={['Small', 'Medium', 'Large', 'Quotes']}
-                     icon={<StarsIcon />}
-                  ></Dropdown>
-               </Options>
-               <Tags>
-                  <Tag icon={<CompleteIcon />}>
-                     {inputString.length + '/' + originalString.length}
-                  </Tag>
-                  <Timer enable={timerEnabled} />
-                  <Tag icon={<ErrorIcon />} custom_color={theme.errorTextColor}>
-                     {errorCount}
-                  </Tag>
-               </Tags>
-               <TextContainer>
-                  {/* <Text ref={componentRef}>{str}</Text> */}
-                  <TextWithLetters>
-                     {originalString.length > 0 &&
-                        originalString.split('').map((char, index) => (
-                           <Letter
-                              key={index}
-                              color={getColorForChar(char, index)}
-                              $needShowBeforeBlock={
-                                 index === inputString.length
-                              }
-                           >
-                              {char}
-                           </Letter>
-                        ))}
-                  </TextWithLetters>
-               </TextContainer>
-
-               </>)}
-               {showStatistics && (
-                  <Statistics
-                     data={timestamps}
-                     spm={(originalString.length / timestamps.length) * 60}
-                     total_symbols={originalString.length}
-                     accuracy={1 - errorCount / totalSymbols}
-                     total_errors={errorCount}
-                  />
-               )}
-               <Button onClick={() => resetAll()} icon={<RefreshIcon />}>
-                  Restart
-               </Button>
-            </VerticalFlex>
-
+                  <Options>
+                     <Dropdown
+                        options={['English', 'Russian', 'Chinese']}
+                        icon={<LanguageIcon />}
+                        changeCallback={changeInnerStateCallback}
+                        filterKey={FILTER_KEYS.language}
+                     ></Dropdown>
+                     <Toggle
+                        icon={<PunctuationIcon />}
+                        changeCallback={changeInnerStateCallback}
+                        filterKey={FILTER_KEYS.punctuation}
+                     >
+                        Punctuation
+                     </Toggle>
+                     <Toggle
+                        icon={<NumbersIcon />}
+                        changeCallback={changeInnerStateCallback}
+                        filterKey={FILTER_KEYS.numbers}
+                     >
+                        Numbers
+                     </Toggle>
+                     <Toggle
+                        icon={<SentencesIcon />}
+                        changeCallback={changeInnerStateCallback}
+                        filterKey={FILTER_KEYS.sentences}
+                     >
+                        Sentences
+                     </Toggle>
+                     <Dropdown
+                        options={['Small', 'Medium', 'Large', 'Quotes']}
+                        icon={<StarsIcon />}
+                        changeCallback={changeInnerStateCallback}
+                        filterKey={FILTER_KEYS.size}
+                     ></Dropdown>
+                  </Options>
+                  <Tags>
+                     <Tag icon={<CompleteIcon />}>
+                        {inputString.length + '/' + originalString.length}
+                     </Tag>
+                     <Timer enable={timerEnabled} />
+                     <Tag
+                        icon={<ErrorIcon />}
+                        custom_color={theme.errorTextColor}
+                     >
+                        {errorCount}
+                     </Tag>
+                  </Tags>
+                  <TextContainer>
+                     {/* <Text ref={componentRef}>{str}</Text> */}
+                     <TextWithLetters>
+                        {originalString.length > 0 &&
+                           originalString.split('').map((char, index) => (
+                              <Letter
+                                 key={index}
+                                 color={getColorForChar(char, index)}
+                                 $needShowBeforeBlock={
+                                    index === inputString.length
+                                 }
+                              >
+                                 {char}
+                              </Letter>
+                           ))}
+                     </TextWithLetters>
+                  </TextContainer>
+               </>
+            )}
+            {showStatistics && (
+               <Statistics
+                  data={timestamps}
+                  spm={(originalString.length / timestamps.length) * 60}
+                  total_symbols={originalString.length}
+                  accuracy={1 - errorCount / totalSymbols}
+                  total_errors={errorCount}
+               />
+            )}
+            <Button onClick={() => resetAll()} icon={<RefreshIcon />}>
+               Restart
+            </Button>
+         </VerticalFlex>
 
          <Tags>
             <SocialButton
@@ -269,7 +307,7 @@ const Letter = styled.span`
       top: 0;
       height: 100%;
       width: 2px;
-      background-color: ${props => props.theme.pointerColor};
+      background-color: ${(props) => props.theme.pointerColor};
       animation: ${blinkingAnimation} 0.6s infinite alternate;
    }
 `;
