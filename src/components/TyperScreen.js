@@ -22,55 +22,78 @@ import Modal from './Modal';
 import { SupportModal } from './SupportModal';
 import { Logo } from './Logo';
 import { Statistics } from './Statistics';
-import { FILTER_KEYS } from './Const';
+import { ENG_TEXT, FILTER } from './Const';
+import {
+   getColorForChar,
+   getNumericTextSize,
+   getRandomSentences,
+} from './Utils';
 
 const TyperScreen = () => {
    const theme = useTheme();
    const [inputString, setInputString] = useState('');
    const [timerEnabled, setTimerEnabled] = useState(false);
    const [originalString, setOriginalString] = useState('');
+   const [cacheString, setCacheString] = useState('');
    const [errorCount, setErrorCount] = useState(0);
    const [modal, setModal] = useState(false);
    const [showStatistics, setShowStatistics] = useState(false);
    const [timestamps, setTimestamps] = useState([]);
    const [totalSymbols, setTotalSymbols] = useState(0);
    const [stringFilter, setStringFilter] = useState({
-      [FILTER_KEYS.language]: 'English',
-      [FILTER_KEYS.punctuation]: true,
-      [FILTER_KEYS.numbers]: true,
-      [FILTER_KEYS.sentences]: true,
-      [FILTER_KEYS.size]: 'Small',
+      [FILTER.keys.language]: 'English',
+      [FILTER.keys.punctuation]: true,
+      [FILTER.keys.numbers]: true,
+      [FILTER.keys.sentences]: true,
+      [FILTER.keys.size]: 'Small',
    });
 
-   let requestSended = false;
-
    const changeInnerStateCallback = (key, option) => {
-      setStringFilter({ ...stringFilter, [key]: option });
-      console.log(stringFilter);
-      // setData();
+      const newFilter = { ...stringFilter, [key]: option };
+      setStringFilter(newFilter);
+      applyFilter(key, newFilter);
+      console.log(newFilter);
+   };
+
+   const applyFilter = (whatChanged, newFilter) => {
+      let newString = cacheString;
+      if (
+         (whatChanged === FILTER.keys.language &&
+            newFilter[FILTER.keys.language] !==
+               stringFilter[FILTER.keys.language]) ||
+         (whatChanged === FILTER.keys.size &&
+            newFilter[FILTER.keys.size] !== stringFilter[FILTER.keys.size])
+      ) {
+         newString = getRandomSentences(
+            newFilter[FILTER.keys.language],
+            getNumericTextSize(newFilter[FILTER.keys.size])
+         );
+         setCacheString(newString);
+      }
+      // Убрать знаки препинания, если флаг выключен
+      if (!newFilter[FILTER.keys.punctuation])
+         newString = newString.replace(/[,\/#!$%^&*;:{}=\-_`~()]/g, '');
+
+      // Убрать знаки числа, если флаг выключен
+      if (!newFilter[FILTER.keys.numbers])
+         newString = newString.replace(/\d+/g, '');
+
+      // Убрать разделение на предложения, если флаг выключен
+      if (!newFilter[FILTER.keys.sentences])
+         newString = newString.replace(/\. /g, '').toLowerCase().slice(0, -1);
+
+      setOriginalString(newString);
    };
 
    const showSupportModal = () => {
       setModal(true);
    };
 
-   /// temporary
-   const setData = async () => {
-      try {
-         const fetchedData = await GetText();
-         setOriginalString(fetchedData);
-         return fetchedData;
-      } catch (error) {
-         // Обработка ошибок
-      }
-   };
-   /// temporary
    useEffect(() => {
-      if (!requestSended) {
-         requestSended = true;
-         setData();
-      }
-   }, [requestSended]);
+      const sentences = getRandomSentences();
+      setOriginalString(sentences);
+      setCacheString(sentences);
+   }, []);
 
    const resetAll = () => {
       setInputString('');
@@ -79,16 +102,6 @@ const TyperScreen = () => {
       setTimestamps([]);
       setTotalSymbols(0);
       setShowStatistics(false);
-   };
-
-   const getColorForChar = (char, index) => {
-      if (index >= inputString.length) {
-         return theme.textColor; // Серый цвет для неактивных символов
-      }
-      if (inputString[index] === char) {
-         return theme.correctTextColor; // Белый цвет для совпавших символов
-      }
-      return theme.errorTextColor; // Красный цвет для несовпавших символов
    };
 
    const updateTimestamps = () => {
@@ -159,37 +172,37 @@ const TyperScreen = () => {
                <>
                   <Options>
                      <Dropdown
-                        options={['English', 'Russian', 'Chinese']}
+                        options={Object.values(FILTER.values.language)}
                         icon={<LanguageIcon />}
                         changeCallback={changeInnerStateCallback}
-                        filterKey={FILTER_KEYS.language}
+                        filterKey={FILTER.keys.language}
                      ></Dropdown>
                      <Toggle
                         icon={<PunctuationIcon />}
                         changeCallback={changeInnerStateCallback}
-                        filterKey={FILTER_KEYS.punctuation}
+                        filterKey={FILTER.keys.punctuation}
                      >
                         Punctuation
                      </Toggle>
                      <Toggle
                         icon={<NumbersIcon />}
                         changeCallback={changeInnerStateCallback}
-                        filterKey={FILTER_KEYS.numbers}
+                        filterKey={FILTER.keys.numbers}
                      >
                         Numbers
                      </Toggle>
                      <Toggle
                         icon={<SentencesIcon />}
                         changeCallback={changeInnerStateCallback}
-                        filterKey={FILTER_KEYS.sentences}
+                        filterKey={FILTER.keys.sentences}
                      >
                         Sentences
                      </Toggle>
                      <Dropdown
-                        options={['Small', 'Medium', 'Large', 'Quotes']}
+                        options={Object.values(FILTER.values.size)}
                         icon={<StarsIcon />}
                         changeCallback={changeInnerStateCallback}
-                        filterKey={FILTER_KEYS.size}
+                        filterKey={FILTER.keys.size}
                      ></Dropdown>
                   </Options>
                   <Tags>
@@ -211,7 +224,12 @@ const TyperScreen = () => {
                            originalString.split('').map((char, index) => (
                               <Letter
                                  key={index}
-                                 color={getColorForChar(char, index)}
+                                 color={getColorForChar(
+                                    theme,
+                                    inputString,
+                                    char,
+                                    index
+                                 )}
                                  $needShowBeforeBlock={
                                     index === inputString.length
                                  }

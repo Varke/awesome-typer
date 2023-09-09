@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
+import { getColorForChar } from './Utils';
 
 export const Logo = () => {
    const originalString = 'awesome-typer';
    const [inputString, setInputString] = useState('');
    const theme = useTheme();
-
-   const getColorForChar = (char, index) => {
-      if (index >= inputString.length) {
-         return theme.textColor; // Серый цвет для неактивных символов
-      }
-      if (inputString[index] === char) {
-         return theme.correctTextColor; // Белый цвет для совпавших символов
-      }
-      return theme.errorTextColor; // Красный цвет для несовпавших символов
-   };
 
    useEffect(() => {
       const interval = setInterval(() => {
@@ -40,7 +31,10 @@ export const Logo = () => {
       <Container href={'http://localhost:3000/'}>
          {originalString.length > 0 &&
             originalString.split('').map((char, index) => (
-               <Letter key={index} color={getColorForChar(char, index)}>
+               <Letter
+                  key={index}
+                  color={getColorForChar(theme, inputString, char, index)}
+               >
                   {char}
                </Letter>
             ))}
