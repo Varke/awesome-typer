@@ -10,6 +10,7 @@ import { ReactComponent as MoneyIcon } from '../icons/money_18dp.svg';
 import { ReactComponent as CodeIcon } from '../icons/code_18dp.svg';
 import { ReactComponent as StarsIcon } from '../icons/stars_18dp.svg';
 import { ReactComponent as SentencesIcon } from '../icons/sentences_18dp.svg';
+import { ReactComponent as PaletteIcon } from '../icons/palette_18dp.svg';
 
 import { Button } from './Button';
 import { Dropdown } from './Dropdown';
@@ -21,14 +22,14 @@ import Modal from './Modal';
 import { SupportModal } from './SupportModal';
 import { Logo } from './Logo';
 import { Statistics } from './Statistics';
-import {  FILTER } from './Const';
+import { FILTER } from './Const';
 import {
    getColorForChar,
    getNumericTextSize,
    getRandomSentences,
 } from './Utils';
 
-const TyperScreen = () => {
+const TyperScreen = (props) => {
    const theme = useTheme();
    const [inputString, setInputString] = useState('');
    const [timerEnabled, setTimerEnabled] = useState(false);
@@ -73,13 +74,13 @@ const TyperScreen = () => {
       if (!newFilter[FILTER.keys.punctuation])
          newString = newString.replace(/[,#!$%^&*;:{}=\-_`~()]/g, '');
 
-      // Убрать знаки числа, если флаг выключен
+      // Убрать числа, если флаг выключен
       if (!newFilter[FILTER.keys.numbers])
          newString = newString.replace(/\d+/g, '');
 
       // Убрать разделение на предложения, если флаг выключен
       if (!newFilter[FILTER.keys.sentences])
-         newString = newString.replace(/\. /g, '').toLowerCase().slice(0, -1);
+         newString = newString.replace(/\. /g, ' ').toLowerCase().slice(0, -1);
 
       setOriginalString(newString);
    };
@@ -254,29 +255,47 @@ const TyperScreen = () => {
             </Button>
          </VerticalFlex>
 
-         <Tags>
+         <BottomButtons>
+            <HorizontalFlex>
+               <SocialButton
+                  icon={<MoneyIcon />}
+                  onClick={() => showSupportModal()}
+               >
+                  Support
+               </SocialButton>
+               <SocialButton
+                  icon={<CodeIcon />}
+                  onClick={() =>
+                     window.open('https://github.com/Varke/typer', 'blank')
+                  }
+               >
+                  Github
+               </SocialButton>
+            </HorizontalFlex>
             <SocialButton
-               icon={<MoneyIcon />}
-               onClick={() => showSupportModal()}
+               icon={<PaletteIcon />}
+               onClick={() => props.toggleTheme()}
             >
-               Support
+               Switch theme
             </SocialButton>
-            <SocialButton
-               icon={<CodeIcon />}
-               onClick={() =>
-                  window.open('https://github.com/Varke/typer', 'blank')
-               }
-            >
-               Github
-            </SocialButton>
-         </Tags>
+         </BottomButtons>
       </Container>
    );
 };
 
+const HorizontalFlex = styled.div`
+   display: flex;
+   gap: 30px;
+`;
+
+const BottomButtons = styled.div`
+   display: flex;
+   justify-content: space-between;
+   width: 75%;
+`;
+
 const VerticalFlex = styled.div`
    width: 100%;
-   background: #333a45;
    display: flex;
    flex-direction: column;
    justify-content: space-between;
@@ -337,9 +356,9 @@ const TextContainer = styled.div`
 `;
 
 const Container = styled.div`
+   background: ${(props) => props.theme.backgroundColor};
    width: 100%;
    min-height: 100vh;
-   background: #333a45;
    display: flex;
    flex-direction: column;
    justify-content: space-between;

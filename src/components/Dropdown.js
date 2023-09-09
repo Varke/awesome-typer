@@ -15,7 +15,9 @@ const DropdownButton = styled.button`
    font-family: ${(props) => props.theme.fontFamily};
    font-weight: 400;
    color: ${(props) =>
-      props.active ? `${props.theme.correctTextColor}` : '#939eae'};
+      props.active
+         ? `${props.theme.correctTextColor}`
+         : `${props.theme.textColor}`};
    border: none;
    cursor: pointer;
    display: flex;
@@ -24,14 +26,16 @@ const DropdownButton = styled.button`
    height: 40px;
    svg {
       fill: ${(props) =>
-         props.active ? `${props.theme.correctTextColor}` : '#939eae'};
+         props.active
+            ? `${props.theme.correctTextColor}`
+            : `${props.theme.textColor}`};
    }
 `;
 
 const DropdownList = styled.ul`
    z-index: 5;
    font-family: ${(props) => props.theme.fontFamily};
-   color: #939eae;
+   color: ${(props) => props.textColor};
    position: absolute;
    top: 100%;
    left: 0;
@@ -39,8 +43,7 @@ const DropdownList = styled.ul`
    max-height: 200px;
    overflow: auto;
    list-style: none;
-   background-color: #2c323b;
-   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   background-color: ${(props) => props.theme.containerBackgroundColor};
    border-radius: 0px 0px 10px 10px;
    padding: 0;
    margin: 0;
@@ -55,9 +58,9 @@ const DropdownList = styled.ul`
 const DropdownItem = styled.li`
    padding: 10px 15px;
    font-size: 14px;
-   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
    cursor: pointer;
    transition: background-color 0.2s ease;
+   color: ${(props) => props.theme.textColor};
 
    &:hover {
       color: ${(props) => props.theme.correctTextColor};

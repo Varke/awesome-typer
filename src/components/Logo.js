@@ -55,7 +55,7 @@ const Letter = styled.span`
 
 const Container = styled.a`
    font-family: ${(props) => props.theme.fontFamily};
-   color: #f1f3f5;
+   color: ${(props) => props.theme.correctTextColor};
    user-select: none;
    cursor: pointer;
    text-decoration: none;

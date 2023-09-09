@@ -7,7 +7,7 @@ Measure, enhance, impress! **awesome-typer** is your key to boosting productivit
 1. [x] Errors counter
 2. [x] Social links
 3. [x] Logo
-4. [ ] Result page
+4. [x] Result page
 5. [ ] Header
 6. [ ] Auth
 7. [ ] Leaderboard
