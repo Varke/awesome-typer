@@ -14,10 +14,10 @@ const dark = {
 const light = {
    backgroundColor: '#EFF7FF',
    containerBackgroundColor: '#E4F2FF',
-   textColor: '#797A8A',
-   correctTextColor: '#38C7C2',
+   textColor: '#364a5e',
+   correctTextColor: '#04A6F4',
    errorTextColor: '#FF585B',
-   pointerColor: '#04A6F4',
+   pointerColor: '#38C7C2',
    fontFamily: "'Noto Sans Mono', monospace",
 };
 
