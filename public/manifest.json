@@ -1,6 +1,7 @@
 {
-   "short_name": "React App",
-   "name": "Create React App Sample",
+   "short_name": "awesome-typer",
+   "name": "awesome-typer | Improve your typing skills on an excellent platform!",
+   "description": "Improve your typing skills on a highly customizable platform. Experience its clean and intuitive design, coupled with an array of tools. Test yourself in diverse modes, keep tabs on your improvement, and turbocharge your typing proficiency. Awesome typing test by varke!",
    "icons": [
       {
          "src": "favicon.ico",
@@ -11,5 +12,6 @@
    "start_url": ".",
    "display": "standalone",
    "theme_color": "#000000",
-   "background_color": "#ffffff"
+   "background_color": "#ffffff",
+   "categories": ["Typing test, boost typing skills"]
 }

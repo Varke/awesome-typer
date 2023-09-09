@@ -356,6 +356,7 @@ const TextContainer = styled.div`
 `;
 
 const Container = styled.div`
+   transition: 0.3s ease-in;
    background: ${(props) => props.theme.backgroundColor};
    width: 100%;
    min-height: 100vh;

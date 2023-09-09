@@ -11,10 +11,8 @@
 }
 body {
    background-color: #f1f3f5;
-   transition: 0s;
 }
 * {
-   transition: 0.3s ease-in;
    margin: 0;
    padding: 0;
    box-sizing: border-box;
