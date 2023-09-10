@@ -273,7 +273,7 @@ const TyperScreen = (props) => {
                <SocialButton
                   icon={<CodeIcon />}
                   onClick={() =>
-                     window.open('https://github.com/Varke/typer', 'blank')
+                     window.open('https://github.com/Varke/awesome-typer', 'blank')
                   }
                >
                   Github
@@ -296,11 +296,16 @@ const TyperScreen = (props) => {
 const HiddenInput = styled.input`
    position: absolute;
    left: -9999px;
+   top: 50%;
 `;
 
 const HorizontalFlex = styled.div`
    display: flex;
    gap: 30px;
+   flex-wrap: wrap;
+  @media (max-width: 768px) {
+    gap: 0px;
+  }
 `;
 
 const BottomButtons = styled.div`

@@ -18,7 +18,7 @@ Test yourself in diverse modes, keep tabs on your improvement, and turbocharge y
 
 ## Feedback
 
-If you have any ideas for enhancing our features or if you come across a bug, please [create an issue](https://github.com/Varke/typer/issues)
+If you have any ideas for enhancing our features or if you come across a bug, please [create an issue](https://github.com/Varke/awesome-typer/issues)
 
 ### TODO
 
