@@ -19,6 +19,9 @@ const ModalContent = styled.div`
    border-radius: 10px;
    padding: 20px;
    max-width: 50%;
+   @media (max-width: 962px) {
+      max-width: 90%;
+   }
 `;
 
 const Modal = ({ isOpen, onClose, children }) => {

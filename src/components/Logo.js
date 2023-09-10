@@ -28,7 +28,7 @@ export const Logo = () => {
    }, [inputString]);
 
    return (
-      <Container href={'http://localhost:3000/'}>
+      <Container href={'https://awesome-typer.netlify.app/'}>
          {originalString.length > 0 &&
             originalString.split('').map((char, index) => (
                <Letter
@@ -45,7 +45,7 @@ export const Logo = () => {
 
 const Letter = styled.span`
    transition: 0.45s ease;
-   font-weight: 800;
+   font-weight: 700;
    font-size: 32px;
    line-height: 24px;
    font-family: ${(props) => props.theme.fontFamily};
@@ -61,6 +61,6 @@ const Container = styled.a`
    text-decoration: none;
    h6 {
       text-align: center;
-      font-weight: 500;
+      font-weight: 400;
    }
 `;

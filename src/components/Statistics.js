@@ -10,18 +10,15 @@ import {
 
 export const Statistics = (props) => {
    const constructDataForGraph = (arrayData) => {
-      const result = arrayData.map((element) => {
+      return arrayData.map((element) => {
          return { value: element[1] * 60 };
       });
-      console.log(result);
-      return result;
    };
-   const data = props.data;
    const theme = useTheme();
    return (
       <ContainerStyled>
          <ResponsiveContainer>
-            <AreaChart data={constructDataForGraph(data)}>
+            <AreaChart data={constructDataForGraph(props.data)}>
                <defs>
                   <linearGradient id={`gradient`} x1="0" y1="0" x2="0" y2="1">
                      <stop
@@ -74,7 +71,7 @@ export const Statistics = (props) => {
                />
             </AreaChart>
          </ResponsiveContainer>
-         <ContainerWithNumbericalResults>
+         <ContainerWithNumericalResults>
             <CellWithData>
                <Number>{Math.round(props.spm)}</Number>
                <Description>
@@ -104,7 +101,7 @@ export const Statistics = (props) => {
                   Total <br></br>time
                </Description>
             </CellWithData>
-         </ContainerWithNumbericalResults>
+         </ContainerWithNumericalResults>
       </ContainerStyled>
    );
 };
@@ -116,18 +113,22 @@ const ContainerStyled = styled.div`
    flex-direction: column;
    gap: 20px;
    overflow: hidden;
+   @media (max-width: 768px) {
+      width: 90%;
+   }
 `;
 
-const ContainerWithNumbericalResults = styled.div`
+const ContainerWithNumericalResults = styled.div`
    display: flex;
    gap: 20px;
    align-items: center;
    justify-content: center;
+   flex-wrap: wrap;
 `;
 
 const Number = styled.span`
    transition: 0.45s ease;
-   font-weight: 800;
+   font-weight: 700;
    font-size: 36px;
    line-height: 32px;
    font-family: ${(props) => props.theme.fontFamily};

@@ -56,7 +56,7 @@ const Container = styled.div`
 const Title = styled.h2`
    color: ${(props) => props.theme.correctTextColor};
    font-family: ${(props) => props.theme.fontFamily};
-   font-weight: 500;
+   font-weight: 700;
    font-size: 24px;
    line-height: 24px;
 `;
@@ -64,7 +64,7 @@ const Title = styled.h2`
 const Description = styled.span`
    color: ${(props) => props.theme.textColor};
    font-family: ${(props) => props.theme.fontFamily};
-   font-weight: 500;
+   font-weight: 400;
    font-size: 18px;
 `;
 

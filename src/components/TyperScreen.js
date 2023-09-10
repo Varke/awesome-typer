@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { keyframes, useTheme } from 'styled-components';
 import { ReactComponent as CompleteIcon } from '../icons/complete_24dp.svg';
 import { ReactComponent as ErrorIcon } from '../icons/error_24dp.svg';
@@ -47,12 +47,18 @@ const TyperScreen = (props) => {
       [FILTER.keys.sentences]: true,
       [FILTER.keys.size]: 'Small',
    });
+   const inputRef = useRef(null);
+
+   // Функция для установки фокуса на элементе. Нужно, чтобы на мобилке
+   // появлялась клавиатура
+   const setFocusOnInput = () => {
+      inputRef.current.focus();
+   };
 
    const changeInnerStateCallback = (key, option) => {
       const newFilter = { ...stringFilter, [key]: option };
       setStringFilter(newFilter);
       applyFilter(key, newFilter);
-      console.log(newFilter);
    };
 
    const applyFilter = (whatChanged, newFilter) => {
@@ -158,10 +164,11 @@ const TyperScreen = (props) => {
       return () => {
          window.removeEventListener('keydown', handleKeyDown);
       };
-   }, [originalString, inputString, totalSymbols]);
+   }, [originalString, inputString, totalSymbols, errorCount]);
 
    return (
       <Container>
+         <HiddenInput type={'text'} ref={inputRef} />
          <Modal isOpen={modal} onClose={() => setModal(false)}>
             <SupportModal></SupportModal>
          </Modal>
@@ -217,8 +224,7 @@ const TyperScreen = (props) => {
                         {errorCount}
                      </Tag>
                   </Tags>
-                  <TextContainer>
-                     {/* <Text ref={componentRef}>{str}</Text> */}
+                  <TextContainer onClick={() => setFocusOnInput()}>
                      <TextWithLetters>
                         {originalString.length > 0 &&
                            originalString.split('').map((char, index) => (
@@ -283,6 +289,11 @@ const TyperScreen = (props) => {
    );
 };
 
+const HiddenInput = styled.input`
+   position: absolute;
+   left: -9999px;
+`;
+
 const HorizontalFlex = styled.div`
    display: flex;
    gap: 30px;
@@ -292,6 +303,10 @@ const BottomButtons = styled.div`
    display: flex;
    justify-content: space-between;
    width: 75%;
+   gap: 30px;
+   @media (max-width: 768px) {
+      width: 90%;
+   }
 `;
 
 const VerticalFlex = styled.div`
@@ -308,12 +323,20 @@ const Options = styled.div`
    justify-content: center;
    width: 75%;
    gap: 10px;
+   flex-wrap: wrap;
+   @media (max-width: 768px) {
+      width: 90%;
+   }
 `;
 
 const Tags = styled.div`
    display: flex;
    width: 75%;
    gap: 30px;
+
+   @media (max-width: 768px) {
+      width: 90%;
+   }
 `;
 
 const blinkingAnimation = keyframes`
@@ -353,6 +376,9 @@ const TextContainer = styled.div`
    flex-direction: column;
    justify-content: flex-start;
    width: 75%;
+   @media (max-width: 768px) {
+      width: 90%;
+   }
 `;
 
 const Container = styled.div`
@@ -368,17 +394,13 @@ const Container = styled.div`
    padding: 50px 0px;
 `;
 
-const Text = styled.span`
-   color: ${(props) => (props.active ? '#FFF' : '#939eae')};
+const TextWithLetters = styled.span`
+   color: ${(props) => props.theme.correctTextColor};
    font-size: 24px;
    font-family: ${(props) => props.theme.fontFamily};
    font-weight: 400;
    user-select: none;
    margin-top: 0;
-`;
-
-const TextWithLetters = styled(Text)`
-   color: ${(props) => props.theme.correctTextColor};
 `;
 
 export default TyperScreen;

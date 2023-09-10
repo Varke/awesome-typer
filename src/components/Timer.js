@@ -29,9 +29,6 @@ export const Timer = (props) => {
 };
 
 const Container = styled.div`
-   /* padding-inline: 20px; */
-   /* border-radius: 10px; */
-   /* background: ${(props) => props.theme.containerBackgroundColor}; */
    font-size: 24px;
    line-height: 24px;
    font-family: ${(props) => props.theme.fontFamily};
