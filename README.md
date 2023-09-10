@@ -1,3 +1,5 @@
+![GitHub Release](https://img.shields.io/github/v/release/varke/awesome-typer.svg)
+![Netlify Status](https://api.netlify.com/api/v1/badges/249b3ca0-1ac8-46cb-b9d3-2ca026f8e671/deploy-status)
 # awesome-typer
 
 Improve your typing skills on a highly customizable platform 🚀
@@ -32,5 +34,3 @@ If you have any ideas for enhancing our features or if you come across a bug, pl
 8. [ ] Dynamic texts
 9. [ ] More languages
 10. [ ] More themes
-
-![Netlify Status](https://api.netlify.com/api/v1/badges/249b3ca0-1ac8-46cb-b9d3-2ca026f8e671/deploy-status)
