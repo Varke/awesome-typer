@@ -11,6 +11,7 @@ import { ReactComponent as CodeIcon } from '../icons/code_18dp.svg';
 import { ReactComponent as StarsIcon } from '../icons/stars_18dp.svg';
 import { ReactComponent as SentencesIcon } from '../icons/sentences_18dp.svg';
 import { ReactComponent as PaletteIcon } from '../icons/palette_18dp.svg';
+import { ReactComponent as BranchIcon } from '../icons/branch.svg';
 
 import { Button } from './Button';
 import { Dropdown } from './Dropdown';
@@ -278,12 +279,15 @@ const TyperScreen = (props) => {
                   Github
                </SocialButton>
             </HorizontalFlex>
-            <SocialButton
-               icon={<PaletteIcon />}
-               onClick={() => props.toggleTheme()}
-            >
-               Switch theme
-            </SocialButton>
+            <HorizontalFlex>
+               <SocialButton
+                  icon={<PaletteIcon />}
+                  onClick={() => props.toggleTheme()}
+               >
+                  Switch theme
+               </SocialButton>
+               <SocialButton icon={<BranchIcon />}>v1.0.0</SocialButton>
+            </HorizontalFlex>
          </BottomButtons>
       </Container>
    );
